@@ -1,4 +1,5 @@
 using EmployeeManagement.Data;
+using EmployeeManagement.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagement
@@ -22,6 +23,10 @@ namespace EmployeeManagement
                         .AllowAnyMethod();
                 });
             });
+
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            builder.Services.AddControllers();
 
             var app = builder.Build();
 
