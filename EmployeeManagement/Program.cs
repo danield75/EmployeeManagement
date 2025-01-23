@@ -39,12 +39,13 @@ namespace EmployeeManagement
                 app.UseSwaggerUI(s =>
                 {
                     s.SwaggerEndpoint("/swagger/v1/swagger.json", "EmployeeManagement v1");
+                    s.RoutePrefix = string.Empty;
                 });
             }
 
             app.UseCors("MyCors");
 
-            app.MapGet("/", () => "Hello World!");
+            app.MapControllers();
 
             app.Run();
         }
