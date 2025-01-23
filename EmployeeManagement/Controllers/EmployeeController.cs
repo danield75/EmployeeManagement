@@ -14,6 +14,13 @@ namespace EmployeeManagement.Controllers
             _employeeRepository = employeeRepository;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Employee>>> GetAllAsync()
+        {
+            var employees = await _employeeRepository.GetAllAsync();
+            return Ok(employees);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Employee>> CreateEmployee(Employee employee)
         {
