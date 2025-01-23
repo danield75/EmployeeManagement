@@ -21,8 +21,19 @@ namespace EmployeeManagement.Controllers
             return Ok(employees);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Employee>> GetByIdAsync(int id)
+        {
+            var employee = await _employeeRepository.GetByIdAsync(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return Ok(employee);
+        }
+
         [HttpPost]
-        public async Task<ActionResult<Employee>> CreateEmployee(Employee employee)
+        public async Task<ActionResult<Employee>> Create(Employee employee)
         {
             await _employeeRepository.AddEmployeeAsync(employee);
             return Created();
