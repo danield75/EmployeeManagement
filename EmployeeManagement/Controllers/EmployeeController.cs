@@ -38,5 +38,18 @@ namespace EmployeeManagement.Controllers
             await _employeeRepository.AddEmployeeAsync(employee);
             return CreatedAtAction(nameof(GetById), new { id = employee.Id }, employee);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteById(int id)
+        {
+            var employee = await _employeeRepository.GetByIdAsync(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            await _employeeRepository.DeleteEmployeeAsync(id);
+            return NoContent();
+        }
     }
 }
