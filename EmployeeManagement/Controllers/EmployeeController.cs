@@ -15,14 +15,14 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<Employee>>> GetAll()
         {
             var employees = await _employeeRepository.GetAllAsync();
             return Ok(employees);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetByIdAsync(int id)
+        public async Task<ActionResult<Employee>> GetById(int id)
         {
             var employee = await _employeeRepository.GetByIdAsync(id);
             if (employee == null)
@@ -36,7 +36,7 @@ namespace EmployeeManagement.Controllers
         public async Task<ActionResult<Employee>> Create(Employee employee)
         {
             await _employeeRepository.AddEmployeeAsync(employee);
-            return Created();
+            return CreatedAtAction(nameof(GetById), new { id = employee.Id }, employee);
         }
     }
 }
