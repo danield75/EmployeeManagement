@@ -21,7 +21,6 @@ namespace EmployeeManagement.Repositories
         public async Task DeleteEmployeeAsync(int id)
         {
             var employee = await _context.Employees.FindAsync(id);
-
             if (employee == null)
             {
                 throw new KeyNotFoundException($"Employee with id {id} was not found.");
@@ -33,12 +32,12 @@ namespace EmployeeManagement.Repositories
 
         public async Task<IEnumerable<Employee>> GetAllAsync()
         {
-            return await _context.Employees.ToListAsync();
+            return await _context.Employees.AsNoTracking().ToListAsync();
         }
 
         public async Task<Employee?> GetByIdAsync(int id)
         {
-            return await _context.Employees.FindAsync(id);
+            return await _context.Employees.AsNoTracking().SingleOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task UpdateEmployeeAsync(Employee employee)

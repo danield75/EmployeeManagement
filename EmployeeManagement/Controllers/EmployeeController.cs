@@ -40,7 +40,7 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteById(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             var employee = await _employeeRepository.GetByIdAsync(id);
             if (employee == null)
@@ -50,6 +50,27 @@ namespace EmployeeManagement.Controllers
 
             await _employeeRepository.DeleteEmployeeAsync(id);
             return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, Employee employee)
+        {
+            if (id != employee.Id)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var existingEmployee = await _employeeRepository.GetByIdAsync(id);
+                if (existingEmployee == null)
+                {
+                    return NotFound();
+                }
+            }
+
+            await _employeeRepository.UpdateEmployeeAsync(employee);
+
+            return CreatedAtAction(nameof(GetById), new { id = employee.Id }, employee);
         }
     }
 }
